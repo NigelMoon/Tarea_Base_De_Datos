@@ -612,7 +612,7 @@ def cita(cursor,conexion):
         day = random.randint(1,28)
         fecha = f"{year}-{month}-{day}"
         rut_cliente = random.randint(10000000,10000000+N_CLIENTE)
-        rut_empleado = random.randint(10000000+N_CLIENTE*2, 10000000+N_EMPLEADO+N_CLIENTE*2+1) #falta la tabla de empleado y ver como seran los ruts
+        rut_empleado = random.randint(10000000+N_CLIENTE*2, 10000000+N_EMPLEADO+N_CLIENTE*2) #falta la tabla de empleado y ver como seran los ruts
         data_to_insert.append((i, fecha, rut_empleado, servicio, peluqueria, rut_cliente))
 
     # Consulta de inserción

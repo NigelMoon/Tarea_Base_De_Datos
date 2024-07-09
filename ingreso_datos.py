@@ -10,7 +10,7 @@ N_EMPLEADO = 1000
 N_VENTA = 1000
 N_USA_PRODUCTO = 100
 N_PRODUCTO = 100
-N_DETALLE_VENTA = random.randint(N_VENTA,N_VENTA*2)
+N_DETALLE_VENTA = random.randint(N_VENTA*5*N_PELUQUERIAS,N_VENTA*10*N_PELUQUERIAS)
 N_CITA = 1000
 N_TRANSACCION = 1000
 
@@ -367,7 +367,7 @@ def venta():
         fecha = f"'{2019+i//(N_VENTA*N_PELUQUERIAS)%5}-{random.randint(1,12)}-{random.randint(1,28)}'"
         datos+=f"({i+1},{fecha},{random.randint(1,200)},{random.randint(10000000,10000000+N_CLIENTE)},{i//(N_VENTA*5)%N_PELUQUERIAS+1}),\n"
     fecha = f"'{2023}-{random.randint(1,12)}-{random.randint(1,28)}'"
-    datos+=f"({N_VENTA*5+1},{fecha},{random.randint(1,200)},{random.randint(10000000,10000000+N_CLIENTE)},{N_PELUQUERIAS});\n"
+    datos+=f"({N_VENTA*5*N_PELUQUERIAS},{fecha},{random.randint(1,200)},{random.randint(10000000,10000000+N_CLIENTE)},{N_PELUQUERIAS});\n"
     return datos
 
 def ocurre():
@@ -398,10 +398,10 @@ def detalle_venta():
 	for i in range(N_DETALLE_VENTA):
 		cantidad = random.randint(1,1000)
 		subtotal = random.randint(1,30)*cantidad
-		datos+=f"({i+1},{subtotal},{cantidad},{random.randint(1,N_VENTA)},{random.randint(1,N_PRODUCTO)}),\n"
+		datos+=f"({i+1},{subtotal},{cantidad},{random.randint(1,N_VENTA*5*N_PELUQUERIAS)},{random.randint(1,N_PRODUCTO)}),\n"
 	cantidad = random.randint(1,1000)
 	subtotal = random.randint(1,30)*cantidad
-	datos+=f"({N_DETALLE_VENTA+1},{subtotal},{cantidad},{random.randint(1,N_VENTA)},{random.randint(1,N_PRODUCTO)});\n"
+	datos+=f"({N_DETALLE_VENTA+1},{subtotal},{cantidad},{random.randint(1,N_VENTA*5*N_PELUQUERIAS)},{random.randint(1,N_PRODUCTO)});\n"
 	return datos
 
 def transaccion_stack():
@@ -413,13 +413,13 @@ def transaccion_stack():
         match t:
             case "servicio":
                 total = random.randint(0,2)
-                locura = random.randint(1,N_PRODUCTO+1)
+                locura = random.randint(1,N_PRODUCTO)
             case "compra":
                 total = random.randint(1,20)
-                locura = random.randint(1,N_PRODUCTO+1)
+                locura = random.randint(1,N_PRODUCTO)
             case "venta":
                 total = random.randint(100,1000)
-                locura = random.randint(1,N_PRODUCTO+1)
+                locura = random.randint(1,N_PRODUCTO)
             case _:
                 return None
         
@@ -429,13 +429,13 @@ def transaccion_stack():
     match t:
         case "servicio":
             total = random.randint(0,2)
-            locura = random.randint(1,N_PRODUCTO+1)
+            locura = random.randint(1,N_PRODUCTO)
         case "compra":
             total = random.randint(1,20)
-            locura = random.randint(1,N_PRODUCTO+1)
+            locura = random.randint(1,N_PRODUCTO)
         case "venta":
             total = random.randint(100,1000)
-            locura = random.randint(1,N_PRODUCTO+1)
+            locura = random.randint(1,N_PRODUCTO)
         case _:
             return None
         
@@ -624,11 +624,11 @@ def detalle_compra(cursor,conexion):
     # Genera los datos de inserción
     data_to_insert = []
     #ojo : hay que ir actualizando los indices del for a medida de que ingresamos datos!
-    for i in range(1, N_COMPRA+1):
+    for i in range(1, N_COMPRA*5*N_PELUQUERIAS*2+1):
         cantidad = random.randint(1,20) #suponiendo un maximo 20
         producto = random.randint(1, 100) #depende de cuantos datos tenga la tabla producto
         subtotal = random.randint(1, 200)
-        id_compra = random.randint(1,100) #depende de cuantos datos tenga la tabla compra
+        id_compra = random.randint(1,N_COMPRA*5*N_PELUQUERIAS) #depende de cuantos datos tenga la tabla compra
         data_to_insert.append((i, cantidad, subtotal, id_compra, producto))
 
     # Consulta de inserción

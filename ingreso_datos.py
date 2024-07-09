@@ -367,7 +367,7 @@ def venta():
         fecha = f"'{2019+i//(N_VENTA*N_PELUQUERIAS)%5}-{random.randint(1,12)}-{random.randint(1,28)}'"
         datos+=f"({i+1},{fecha},{random.randint(1,200)},{random.randint(10000000,10000000+N_CLIENTE)},{i//(N_VENTA*5)%N_PELUQUERIAS+1}),\n"
     fecha = f"'{2023}-{random.randint(1,12)}-{random.randint(1,28)}'"
-    datos+=f"({N_VENTA*5*N_PELUQUERIAS},{fecha},{random.randint(1,200)},{random.randint(10000000,10000000+N_CLIENTE)},{N_PELUQUERIAS});\n"
+    datos+=f"({N_VENTA*5*N_PELUQUERIAS+1},{fecha},{random.randint(1,200)},{random.randint(10000000,10000000+N_CLIENTE)},{N_PELUQUERIAS});\n"
     return datos
 
 def ocurre():
@@ -398,10 +398,10 @@ def detalle_venta():
 	for i in range(N_DETALLE_VENTA):
 		cantidad = random.randint(1,1000)
 		subtotal = random.randint(1,30)*cantidad
-		datos+=f"({i+1},{subtotal},{cantidad},{random.randint(1,N_VENTA*5*N_PELUQUERIAS)},{random.randint(1,N_PRODUCTO)}),\n"
+		datos+=f"({i+1},{subtotal},{cantidad},{random.randint(1,N_VENTA*5*N_PELUQUERIAS+1)},{random.randint(1,N_PRODUCTO)}),\n"
 	cantidad = random.randint(1,1000)
 	subtotal = random.randint(1,30)*cantidad
-	datos+=f"({N_DETALLE_VENTA+1},{subtotal},{cantidad},{random.randint(1,N_VENTA*5*N_PELUQUERIAS)},{random.randint(1,N_PRODUCTO)});\n"
+	datos+=f"({N_DETALLE_VENTA+1},{subtotal},{cantidad},{random.randint(1,N_VENTA*5*N_PELUQUERIAS+1)},{random.randint(1,N_PRODUCTO)});\n"
 	return datos
 
 def transaccion_stack():

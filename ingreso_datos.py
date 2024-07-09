@@ -1,6 +1,7 @@
 import psycopg2 as network
 import random
 
+random.seed(911)
 N_PELUQUERIAS = 100
 #Servicios es constante, a no ser que quieran agregar mas
 N_CLIENTE = 1000
@@ -81,7 +82,8 @@ lista_servicios = [
     "Extensiones de cabello",
     "Servicios de barberia",
     "Tratamientos para el cuero cabelludo",
-    "Asesoria de imagen personalizada"]
+    "Asesoria de imagen personalizada",
+    "corte de pelo y barba"]
 
 N_SERVICIOS = len(lista_servicios)
 
@@ -153,18 +155,6 @@ def main():
     #sueldo
     sueldo(cursor,conexion)
     
-    #RECORDAR ELIMINAR
-    """
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠠⣿⣿⣿⣿⡆⠀⠀⠀⠀⢸⣿⣿⣿⣶
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠐⣿⣿⣿⣿⣇⠀⠀⠀⠀⢰⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⣦⠀⠀⠀⠀⠀⠀⠀⠀ ⠈⣿⣿⣿⣿⡇⠀⠀⠀⠀⢸⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠘⢿⡤⠀⠀⠀ ⠀ ⠀⠠⣿⣿⣿⣿⡇⠀⠀⠀⠀⢸⣿⣿⣿⣿
-⠀⠀⢹⣆⣀⣀⣀⣾⣿⣆⣀⡀⠀⠀ ⢰⣿⣿⣿⣿⡇⠀⠀⠀⠀⢸⣿⣿⣿⣿
-⠀⠀⢼⠋⠉⠉⠉⣻⣿⠛⠉⠈⠁⠀ ⢘⣿⣿⣿⣿⡏⠀⠀⠀⠀⠘⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⣰⣿⠋⠀⠀⠀⠀⠀⠀ ⢈⣿⣿⣿⣿⣏⠀⠀⠀⠀⠈⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠏⠁⠀⠀⠀⠀⠀⠀⠀ ⢈⣿⣿⡿⢿⡗⠀⠀⠀⠀⠀⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀ ⢰⣿⣿⣷⣿⡏⠀⠀⠀⠀⢰⣿⣿⣿⡿
-    """
     cursor.execute("insert into servicio values (%s,'%s',%s);"%(911,"2001 acaba de llamar... golpearon la segunda torre",37295740000000))
     conexion.commit()
     

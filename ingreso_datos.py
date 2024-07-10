@@ -600,19 +600,23 @@ def ofrece(cursor,conexion):
 
 def cita(cursor,conexion):
     data_to_insert = []
+    id_cita_actual = 1
     #ojo : hay que ir actualizando los indices del for a medida de que ingresamos datos!
-    for i in range(1, N_CITA*5*N_PELUQUERIAS+1):
-        peluqueria = 1+i//(N_COMPRA*5)%N_PELUQUERIAS
-        cursor.execute(f"select o.id_servicio from ofrece o where o.id_peluqueria = {peluqueria};")
-        servicio = random.choice(cursor.fetchall())[0]
-        year = 2019+i//(N_CITA*N_PELUQUERIAS)%5
-        month = random.randint(1,12)
-        day = random.randint(1,28)
-        fecha = f"{year}-{month}-{day}"
-        rut_cliente = random.randint(10000000,10000000+N_CLIENTE)
-        rut_empleado = random.randint(10000000+N_CLIENTE*2, 10000000+N_EMPLEADO+N_CLIENTE*2) #falta la tabla de empleado y ver como seran los ruts
-        data_to_insert.append((i, fecha, rut_empleado, servicio, peluqueria, rut_cliente))
-
+    for j in range(1,N_PELUQUERIAS+1):
+        citas = random.randint(N_CITA,N_CITA*2)
+        for i in range(1, citas*5+1):
+            peluqueria = j
+            cursor.execute(f"select o.id_servicio from ofrece o where o.id_peluqueria = {peluqueria};")
+            servicio = random.choice(cursor.fetchall())[0]
+            year = 2019+i//(citas)%5
+            month = random.randint(1,12)
+            day = random.randint(1,28)
+            fecha = f"{year}-{month}-{day}"
+            rut_cliente = random.randint(10000000,10000000+N_CLIENTE)
+            cursor.execute(f"select rut_empleado from empleado where id_peluqueria = {peluqueria};")
+            rut_empleado = random.choice(cursor.fetchall())[0]
+            data_to_insert.append((id_cita_actual, fecha, rut_empleado, servicio, peluqueria, rut_cliente))
+            id_cita_actual+=1
     # Consulta de inserción
     insert_query = "INSERT INTO cita (id_cita, fecha, rut_empleado ,id_servicio, id_peluqueria, rut_cliente) VALUES (%s, %s, %s, %s, %s, %s)"
     cursor.executemany(insert_query,data_to_insert)

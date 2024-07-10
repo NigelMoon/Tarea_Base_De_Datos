@@ -91,6 +91,7 @@ def main():
             Bruno = False
 
     print("inicializando schedule")
+    tarea(Config1,Config2)
     schedule.every(1).week.do(tarea,Config1,Config2)
     while True:
         schedule.run_pending()
@@ -148,51 +149,41 @@ def tarea(Config1,Config2):
     
     
     bloque = verificar_dato(bloques,"bloque",cursor2)
-    cursor2.executemany("insert into bloque (id_bloque) VALUES (%s)",bloque)
-    conexion2.commit()
+    if len(bloque) != 0:
+        cursor2.executemany("insert into bloque (id_bloque) VALUES (%s)",bloque)
+        conexion2.commit()
 
-    print("bloques insertados correctamente en citas!!")
-    
     peluqueria = verificar_dato(peluquerias,"peluqueria",cursor2)
-    cursor2.execute("insert into peluqueria (id_peluqueria) values (%s)",peluqueria)
-    conexion2.commit()
+    if len(peluqueria) != 0:
+        cursor2.executemany("insert into peluqueria (id_peluqueria) values (%s)",peluqueria)
+        conexion2.commit()
     
-    print("peluquerias insertadas correctamente en citas!!")
+    comuna = verificar_dato(comunas,"comuna",cursor2)
+    if len(comuna)!=0:
+        cursor2.executemany("insert into comuna (id_comuna,nombre) values (%s,%s)",comuna)
+        conexion2.commit()
     
-    for comuna in comunas:
-        if(verificar_dato(comuna,"comuna",TABLA_HECHOS_1,cursor2)):
-            cursor2.execute("insert into comuna (id_comuna,nombre) values (%s,%s)",comuna)
-            conexion2.commit()
+    cliente = verificar_dato(clientes,"cliente",cursor2)
+    if len(cliente)!=0:
+        cursor2.executemany("insert into cliente (rut_cliente,nombre) values (%s,%s)",cliente)
+        conexion2.commit()
     
-    print("Comunas insertadas correctamente en citas!!")
-    
-    for cliente in clientes:
-        if(verificar_dato(cliente,"cliente",TABLA_HECHOS_1,cursor2)):
-            cursor2.execute("insert into cliente (rut_cliente,nombre) values (%s,%s)",cliente)
-            conexion2.commit()
-    
-    print("clientes insertados correctamente en citas!!")
-    
-    for empleado in empleados:
-        if(verificar_dato(empleado,"empleado",TABLA_HECHOS_1,cursor2)):
-            cursor2.execute("insert into empleado (rut_empleado,nombre_empleado,apellido_empleado) values (%s,%s,%s)",empleado)
-            conexion2.commit()
+    empleado = verificar_dato(empleados,"empleado",cursor2)
+    if len(empleado) !=0:
+        cursor2.execute("insert into empleado (rut_empleado,nombre_empleado,apellido_empleado) values (%s,%s,%s)",empleado)
+        conexion2.commit()
 
-    print("empleados insertados correctamente en citas!!")
-
-    for servicio in servicios:
-        if(verificar_dato(servicio,"servicios",TABLA_HECHOS_1,cursor2)):
-            cursor2.execute("insert into servicios (id_servicio, nombre_servicio) values (%s,%s)",servicio)
-            conexion2.commit()
-
-    print("servicios insertados correctamente en citas!!")
+    servicio = verificar_dato(servicios,"servicios",cursor2)
+    if(len(servicio) != 0):
+        cursor2.execute("insert into servicios (id_servicio, nombre_servicio) values (%s,%s)",servicio)
+        conexion2.commit()
     
-    for cita in citas:
-        if(verificar_dato(cita,"cita",TABLA_HECHOS_1,cursor2)):
-            cursor2.execute("insert into cita (id_cita, fecha, rut_empleado, id_peluqueria, id_servicio, rut_cliente, id_comuna_cliente, id_comuna_empleado, id_bloque_inicio, costo_servicio, id_comuna_peluqueria, sexo, id_bloque_fin) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",cita)
-            conexion2.commit()
-            
-    print("citas insertadas correctamente en citas!!")
+    cita = verificar_dato(citas,"cita",cursor2)
+    if len(cita)!=0:
+        cursor2.execute("insert into cita (id_cita, fecha, rut_empleado, id_peluqueria, id_servicio, rut_cliente, id_comuna_cliente, id_comuna_empleado, id_bloque_inicio, costo_servicio, id_comuna_peluqueria, sexo, id_bloque_fin) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",cita)
+        conexion2.commit()
+
+    print("Elementos de la tabla 1 ingresados con exito!!")
     
     #Tabla 2 detalle_venta
     
@@ -214,37 +205,37 @@ def tarea(Config1,Config2):
     cursor1.execute(sentencia2)
     detalles = cursor1.fetchall()
     
-    for peluqueria in peluquerias:
-        if(verificar_dato(peluqueria,"peluqueria_v",TABLA_HECHOS_2,cursor2)):
-            cursor2.execute("insert into peluqueria_v (id_peluqueria) values (%s)",peluqueria)
-            conexion2.commit()
+    peluqueria = verificar_dato(peluquerias,"peluqueria_v",cursor2)
+    if len(peluqueria) != 0:
+        cursor2.execute("insert into peluqueria_v (id_peluqueria) values (%s)",peluqueria)
+        conexion2.commit()
     
-    print("peluquerias insertadas correctamente en detalle_venta!!")
+    comuna = verificar_dato(comunas,"comuna_c",cursor2)
+    if len(comuna)!=0:
+        cursor2.execute("insert into comuna_c (id_comuna,nombre) values (%s,%s)",comuna)
+        conexion2.commit()
     
-    for comuna in comunas:
-        if(verificar_dato(comuna,"comuna_c",TABLA_HECHOS_2,cursor2)):
-            cursor2.execute("insert into comuna_c (id_comuna,nombre) values (%s,%s)",comuna)
-            conexion2.commit()
-    
-    for cliente in clientes:
-        if(verificar_dato(cliente,"clienteventa",TABLA_HECHOS_2,cursor2)):
-            cursor2.execute("insert into clienteventa (rut_cliente,nombre) values (%s,%s)",cliente)
-            conexion2.commit()
+    cliente = verificar_dato(clientes,"clienteventa",cursor2)
+    if len(cliente) != 0:
+        cursor2.execute("insert into clienteventa (rut_cliente,nombre) values (%s,%s)",cliente)
+        conexion2.commit()
         
-    for venta in ventas:
-        if(verificar_dato(venta,"venta",TABLA_HECHOS_2,cursor2)):
-            cursor2.execute("insert into venta (id_venta) values (%s)",venta)
-            conexion2.commit()
+    venta = verificar_dato(ventas,"venta",cursor2)
+    if len(venta) != 0:
+        cursor2.execute("insert into venta (id_venta) values (%s)",venta)
+        conexion2.commit()
     
-    for producto in productos:
-        if(verificar_dato(producto,"producto",TABLA_HECHOS_2,cursor2)):
-            cursor2.execute("insert into producto (id_producto) values (%s)",producto)
-            conexion2.commit()
+    producto = verificar_dato(productos,"producto",cursor2)
+    if len(producto)!=0:
+        cursor2.execute("insert into producto (id_producto) values (%s)",producto)
+        conexion2.commit()
             
-    for detalle_venta in detalles:
-        if(verificar_dato(detalle_venta,"detalle_venta",TABLA_HECHOS_2,cursor2)):
-            cursor2.execute("insert into detalle_venta (id_detalle_venta, id_venta, id_producto, precio_venta, total, fecha, sexo, id_comuna, rut_cliente, id_peluqueria, id_comuna_peluqueria, subtotal, cantidad) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",detalle_venta)
-            conexion2.commit()
+    detalle_venta = verificar_dato(detalles,"detalle_venta",cursor2)
+    if len(detalle_venta)!=0:
+        cursor2.execute("insert into detalle_venta (id_detalle_venta, id_venta, id_producto, precio_venta, total, fecha, sexo, id_comuna, rut_cliente, id_peluqueria, id_comuna_peluqueria, subtotal, cantidad) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",detalle_venta)
+        conexion2.commit()
+    
+    print("Elementos de la tabla 2 ingresados con exito!!!")
     
     #Tabla 3 empleado_h
     sentencia3 = """
@@ -259,25 +250,27 @@ def tarea(Config1,Config2):
     cursor1.execute(sentencia3)
     empleados_h = cursor1.fetchall()
     
-    for comuna in comunas:
-        if(verificar_dato(comuna,"comuna_h",TABLA_HECHOS_3,cursor2)):
-            cursor2.execute("insert into comuna_h (id_comuna,nombre) values (%s,%s)",comuna)
-            conexion2.commit()
+    comuna = verificar_dato(comunas,"comuna_h",cursor2)
+    if len(comuna) != 0:
+        cursor2.execute("insert into comuna_h (id_comuna,nombre) values (%s,%s)",comuna)
+        conexion2.commit()
     
-    for peluqueria in peluquerias:
-        if(verificar_dato(peluqueria,"peluqueria_h",TABLA_HECHOS_3,cursor2)):
-            cursor2.execute("insert into peluqueria_h (id_peluqueria) values (%s)",peluqueria)
-            conexion2.commit()
+    peluqueria = verificar_dato(peluquerias,"peluqueria_h",cursor2)
+    if len(peluqeuria) != 0:
+        cursor2.execute("insert into peluqueria_h (id_peluqueria) values (%s)",peluqueria)
+        conexion2.commit()
     
-    for sueldo in sueldos:
-        if(verificar_dato(sueldo,"sueldo",TABLA_HECHOS_3,cursor2)):
-            cursor2.execute("insert into sueldo (id_sueldo) values (%s)",sueldo)
-            conexion2.commit()
+    sueldo = verificar_dato(sueldos,"sueldo",cursor2)
+    if len(sueldo)!=0:
+        cursor2.execute("insert into sueldo (id_sueldo) values (%s)",sueldo)
+        conexion2.commit()
     
-    for empleado in empleados_h:
-        if(verificar_dato(empleado,"empleado_h",TABLA_HECHOS_3,cursor2)):
-            cursor2.execute("insert into empleado_h (rut_empleado,id_peluqueria ,nombre_empleado,apellido_empleado,id_comuna,fecha,monto,id_sueldo,id_comuna_peluqueria) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)",empleado)
-            conexion2.commit()
+    empleado = verificar_dato(empleados_h,"empleado_h",cursor2)
+    if len(empleado) != 0:
+        cursor2.execute("insert into empleado_h (rut_empleado,id_peluqueria ,nombre_empleado,apellido_empleado,id_comuna,fecha,monto,id_sueldo,id_comuna_peluqueria) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)",empleado)
+        conexion2.commit()
+    
+    print("Elementos de la tabla 3 ingresados con exito!!")
     
     #Tabla 4 ofrece
     sentencia4 = """
@@ -290,26 +283,28 @@ def tarea(Config1,Config2):
     cursor1.execute(sentencia4)
     ofreces = cursor1.fetchall()
     
-    for servicio in servicios:
-        if(verificar_dato(servicio,"servicios_o",TABLA_HECHOS_4,cursor2)):
-            cursor2.execute("insert into servicios_o (id_servicio, nombre_servicio) values (%s,%s)",servicio)
-            conexion2.commit()
+    servicio = verificar_dato(servicios,"servicios_o",cursor2)
+    if len(servicio)!=0:
+        cursor2.execute("insert into servicios_o (id_servicio, nombre_servicio) values (%s,%s)",servicio)
+        conexion2.commit()
     
-    for comuna in comunas:
-        if(verificar_dato(comuna,"comuna_p",TABLA_HECHOS_4,cursor2)):
-            cursor2.execute("insert into comuna_p (id_comuna, nombre) values (%s,%s)",comuna)
-            conexion2.commit()
+    comuna = verificar_dato(comunas,"comuna_p",cursor2)
+    if len(comuna) != 0:
+        cursor2.execute("insert into comuna_p (id_comuna, nombre) values (%s,%s)",comuna)
+        conexion2.commit()
             
     
-    for peluqueria in peluquerias:
-        if(verificar_dato(peluqueria,"peluqueria_s",TABLA_HECHOS_4,cursor2)):
-            cursor2.execute("insert into peluqueria_s (id_peluqueria) values (%s)",peluqueria)
-            conexion2.commit()
+    peluqueria = verificar_dato(peluquerias,"peluqueria_s",cursor2)
+    if len(peluqueria) != 0:
+        cursor2.execute("insert into peluqueria_s (id_peluqueria) values (%s)",peluqueria)
+        conexion2.commit()
             
-    for ofrece in ofreces:
-        if(verificar_dato(ofrece,"ofrece",TABLA_HECHOS_4,cursor2)):
-            cursor2.execute("insert into ofrece (id_ofrece, id_peluqueria, id_comuna, costo_servicio, id_servicio) values (%s,%s,%s,%s,%s)",ofrece)
-            conexion2.commit()
+    ofrece = verificar_dato(ofreces,"ofrece",cursor2)
+    if len(ofrece)!=0:
+        cursor2.execute("insert into ofrece (id_ofrece, id_peluqueria, id_comuna, costo_servicio, id_servicio) values (%s,%s,%s,%s,%s)",ofrece)
+        conexion2.commit()
+    
+    print("Elementos de la tabla 4 ingresados con exito!!!")
     
     print("Ejecucion finalizada!!")
     cursor1.close()

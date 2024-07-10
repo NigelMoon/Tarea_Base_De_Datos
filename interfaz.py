@@ -3,7 +3,7 @@ from tkinter import ttk
 from datetime import date
 import psycopg2 as network
 
-"""
+
 PASSWORD = 'Contraseña'
 DATABASE = 'Database'
 
@@ -23,10 +23,35 @@ comunas = cursor.fetchall()
 
 cursor.execute("select nombre_producto from producto;")
 productos = cursor.fetchall()
-"""
-#aqui ta raro el ingreso, ta medio huh? huh? huh?
 
 def ingresa_venta(): #Funcion que maneja la venta de un producto
+    def ingreso_venta():
+        total = int(etiqueta_total.get())
+        fecha = str(date.today())
+        peluqueria = int(combo_peluqueria.get())
+        cliente = int(caja_rut_cl.get())
+        cursor.execute("select max(id_venta) from venta;")
+        id_venta = cursor.fetchone()[0]+1
+        cursor.execute("insert into venta (id_venta,fecha,total,rut_cliente,id_peluqueria) values (%s,%s,%s,%s,%s)",(id_venta,fecha,total,cliente,id_peluqueria))
+        conexion.commit()
+        
+        cursor.execute("select max(id_detalle_venta) from detalle_venta;")
+        id_detalle_venta = cursor.fetchone()[0]+1
+        for producto, cantidad in productos_venta:
+            cursor.execute(f"""select id_producto, precio_venta from productos p 
+                           where p.nombre_producto = {producto}""")
+            precio = cursor.fetchall()[1]
+            id_producto = cursor.fetchall()[0]
+            subtotal = precio*int(cantidad)
+            cursor.execute("insert into detalle_venta (id_detalle_venta, subtotal, cantidad, id_venta, id_producto) values (%s,%s,%s,%s,%s)",(id_detalle_venta,subtotal,cantidad,id_venta,id_producto))
+            conexion.commit()
+            id_detalle_venta+=1
+            ...
+        #Ingreso de venta
+        productos_venta = []
+        cierra_ventana_venta()
+
+
     def ingresa_detalle_venta(): #Funcion que maneja el detalle de venta de un producto
         
         def ingreso_datos():
@@ -34,6 +59,8 @@ def ingresa_venta(): #Funcion que maneja la venta de un producto
             texto_detalle = ''
             total = 0
             producto = combo_producto_detalle.get()
+            cursor.execute(f"select precio_venta from producto where nombre={producto}")
+            precio = cursor.fetchone()[0]
             cantidad = int(caja_cantidad.get())
             if productos_venta:
                 existe = False
@@ -48,7 +75,7 @@ def ingresa_venta(): #Funcion que maneja la venta de un producto
 
             for tupla in productos_venta:
                 texto_detalle += str(tupla[1]) + 'x ' + str(tupla[0]) + '\n'
-                total += tupla[1]*1000
+                total += tupla[1]*precio
 
             etiqueta_total.config(text=str(total))
             etiqueta_detalle_locura.config(text=texto_detalle)
@@ -74,11 +101,17 @@ def ingresa_venta(): #Funcion que maneja la venta de un producto
         etiqueta_titulo_detalle = ttk.Label(ventana_detalle, text="Ingresar datos del detalle de venta de un producto", font=("Arial", 15))
         etiqueta_titulo_detalle.place(x = 260, y = 20)
 
+        cursor.execute("""select p.nombre_producto from productos p 
+        inner join detalle_compra d in d.id_producto = p.id_producto
+        inner join compra c in d.id_compra = c.id_compra
+        inner join peluqueria pe in c.id_peluqueria = pe.id_peluqueria;""")
+        productos_ventas = cursor.fetchall()
+        
         """INGRESAR PRODUCTO"""
         etiqueta_producto_detalle = ttk.Label(ventana_detalle, text="Ingresar producto: ", font=("Arial", 15))
         etiqueta_producto_detalle.place(x = 20, y = 80)
         
-        combo_producto_detalle = ttk.Combobox(ventana_detalle, values=productos, font=("Arial", 15), state='readonly')
+        combo_producto_detalle = ttk.Combobox(ventana_detalle, values=productos_ventas, font=("Arial", 15), state='readonly')
         combo_producto_detalle.place(x = 320, y = 80, width= 350, height=30)
 
         """INGRESAR CANTIDAD"""
@@ -157,6 +190,32 @@ def ingresa_venta(): #Funcion que maneja la venta de un producto
     ventana_venta.protocol("WM_DELETE_WINDOW", cierra_ventana_venta)
 
 def ingresa_compra(): #Funcion que maneja las compras de un producto
+    def ingreso_compra():
+        total = int(etiqueta_total.get())
+        fecha = str(date.today())
+        peluqueria = int(combo_peluqueria.get())
+        cursor.execute("select max(id_compra) from compra;")
+        id_compra = cursor.fetchone()[0]+1
+        cursor.execute("insert into compra (id_compra, fecha, total, id_peluqueria) values (%s,%s,%s,%s)",(id_compra,fecha,total,peluqueria))
+        conexion.commit()
+        
+        cursor.execute("select max(id_detalle_compra) from detalle_compra;")
+        id_detalle_compra = cursor.fetchone()[0]+1
+        for producto, cantidad in productos_compra:
+            cursor.execute(f"""select id_producto, precio_compra from productos p 
+                           where p.nombre_producto = {producto}""")
+            precio = cursor.fetchall()[1]
+            id_producto = cursor.fetchall()[0]
+            subtotal = precio*int(cantidad)
+            cursor.execute("insert into detalle_compra (id_detalle_compra, cantidad, subtotal, id_compra, id_producto) values (%s,%s,%s,%s,%s)",(id_detalle_compra,cantidad,subtotal,id_compra,id_producto))
+            cursor.commit()
+            id_detalle_compra+=1
+            ...
+        #Ingreso de compra
+        productos_compra = []
+        cierra_ventana_compra()
+        
+
     def ingresa_detalle_compra(): #Funcion que maneja el detalle de venta de un producto
         def cierra_ventana_detalle_compra():
             ventana_detalle.destroy()
@@ -283,8 +342,6 @@ def ingresa_compra(): #Funcion que maneja las compras de un producto
 
     ventana_compra.protocol("WM_DELETE_WINDOW", cierra_ventana_compra)
 
-#de aqui pa abajo ya tan listos los insert, capaz algo que diga error al igreso, ahi no c tu
-
 def ingresa_empleado(): #Funcion que maneja el ingreso de un cliente
     def cierra_ventana_empleado():
         ventana_empleado.destroy()
@@ -297,7 +354,7 @@ def ingresa_empleado(): #Funcion que maneja el ingreso de un cliente
         apellido = caja_apellido.get()
         comuna = combo_comuna_em.get()
         cursor.execute(f"select id_comuna from comuna where nombre={comuna};")
-        id_comuna = cursor.fetchone()
+        id_comuna = cursor.fetchone()[0]
         peluqueria = int(combo_peluqueria.get())
         
         try:
@@ -305,6 +362,8 @@ def ingresa_empleado(): #Funcion que maneja el ingreso de un cliente
             conexion.commit()
         except network.IntegrityError:
             conexion.rollback()
+        
+        cierra_ventana_empleado()
 
 
     ventana.withdraw()
@@ -374,7 +433,7 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
         peluqueria = int(combo_peluqueria.get()) # bitch wtf is this???? -nyalvarito
         servicio = combo_servicio.get()
         
-        cursor.execute("select max(id_cita) from cita limit 1;")
+        cursor.execute("select max(id_cita) from cita;")
         id_cita = cursor.fetchone()[0]+1
         try:
             cursor.execute("insert into cita (id_cita,fecha,rut_empleado,id_servicio,id_peluqueria,rut_cliente) values (%s,%s,%s,%s,%s,%s)",(id_cita,fecha,rut_pel,servicio,id_peluqueria,rut_cl))
@@ -382,12 +441,13 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
         except network.IntegrityError:
             conexion.rollback()
         finally:
-            cursor.execute("select max(id_ocurre) from ocurre limit 1;")
+            cursor.execute("select max(id_ocurre) from ocurre;")
             id_ocurre = cursor.fetchone()[0]+1
             for i in bloque:
                 cursor.execute("insert into ocurre (id_ocurre, id_cita, id_bloque) values (%s,%s,%s)",(id_ocurre,id_cita,i))
                 conexion.commit()
                 id_ocurre+=1
+        cierra_ventana_cita()
         ...
 
     
@@ -427,7 +487,7 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
     caja_fecha.place(x = 320, y = 176, width= 350, height=30)
 
     """INGRESAR BLOQUE"""
-    etiqueta_bloque = tk.Label(ventana_cita, text="Ingresar bloque/hora: ", font=("Arial", 15))
+    etiqueta_bloque = tk.Label(ventana_cita, text="Ingresar bloques separados por coma: ", font=("Arial", 15))
     etiqueta_bloque.place(x = 20, y = 224)
     
     caja_bloque = tk.Entry(ventana_cita, font=("Arial", 15))
@@ -464,7 +524,7 @@ def ingresa_cliente(): #Funcion que maneja el ingreso de un cliente
     
 
     def ingreso_datos():
-        rut = caja_rut.get() #esto deberia ser entero
+        rut = int(caja_rut.get())
         nombre = caja_nombre.get()
         apellido = caja_apellido.get() #no es taaan necesario btw
         sexo = combo_sexo.get()
@@ -477,6 +537,8 @@ def ingresa_cliente(): #Funcion que maneja el ingreso de un cliente
             conexion.commit()
         except network.IntegrityError:
             conexion.rollback()
+            
+        cierra_ventana_cliente()
         ...
 
 
@@ -587,8 +649,8 @@ def main():
     etiqueta_peluqueria = ttk.Label(text="Ingresa sede: ", font=("Arial", 19))
     etiqueta_peluqueria.place(x=80, y=90)
 
-    #cursor.execute("select id_peluqueria from peluqueria;")
-    #peluquerias = cursor.fetchall()
+    cursor.execute("select id_peluqueria from peluqueria;")
+    peluquerias = cursor.fetchall()
 
     combo_peluqueria = ttk.Combobox(values=peluquerias, width=30, font=("Arial", 19), state='readonly')
     combo_peluqueria.place(x=250, y=90)

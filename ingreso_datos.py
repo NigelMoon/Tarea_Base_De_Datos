@@ -373,8 +373,9 @@ def venta():
 def ocurre():
     #id_ocurre, id_cita, id_bloque
     datos = ""
-    const = 1
+    const = 0
     for i in range(N_CITA-1):
+        const+=1
         bloque = random.randint(1,10)
         datos+=f"({const},{i},{bloque}),\n"
         while random.randint(0,1)!=0 and bloque<12:

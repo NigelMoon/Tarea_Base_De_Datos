@@ -378,7 +378,7 @@ def ocurre():
         bloque = random.randint(1,10)
         datos+=f"({const},{i},{bloque}),\n"
         while random.randint(0,1)!=0 and bloque<12:
-            conts+=1
+            const+=1
             bloque+=1
             datos+=f"({const},{i+1},{bloque}),\n"
     const+=1
@@ -642,11 +642,11 @@ def sueldo(cursor,conexion):
     #ojo : hay que ir actualizando los indices del for a medida de que ingresamos datos!
     for i in range(1, cant_sueldos+1):
         monto = random.randint(300000,500000)
-        year = random.randint(2019,2024)
+        year = random.randint(2019,2023)
         month = random.randint(1,12)
         day = random.randint(1,28)
         fecha = f"{year}-{month}-{day}"
-        rut_empleado = random.randint(10000000+N_CLIENTE*2, 10000000+N_CLIENTE*2+N_EMPLEADO+1)
+        rut_empleado = random.randint(10000000+N_CLIENTE*2, 10000000+N_CLIENTE*2+N_EMPLEADO)
         data_to_insert.append((i, fecha, monto, rut_empleado))
 
     # Consulta de inserción

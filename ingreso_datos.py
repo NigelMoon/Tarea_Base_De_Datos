@@ -155,9 +155,6 @@ def main():
     #sueldo
     sueldo(cursor,conexion)
     
-    cursor.execute("insert into servicio values (%s,'%s',%s);"%(911,"2001 acaba de llamar... golpearon la segunda torre",37295740000000))
-    conexion.commit()
-    
     cursor.close()
     conexion.close()
     print("Ejecucion terminada!!!!")

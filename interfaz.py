@@ -3,6 +3,7 @@ from tkinter import ttk
 from datetime import date
 import psycopg2 as network
 
+"""
 PASSWORD = 'Contraseña'
 DATABASE = 'Database'
 
@@ -20,10 +21,9 @@ cursor = conexion.cursor()
 cursor.execute("select nombre from comuna;")
 comunas = cursor.fetchall()
 
-cursor.execute("""select nombre_producto 
-               from producto p;""")
+cursor.execute("select nombre_producto from producto;")
 productos = cursor.fetchall()
-
+"""
 #aqui ta raro el ingreso, ta medio huh? huh? huh?
 
 def ingresa_venta(): #Funcion que maneja la venta de un producto
@@ -78,14 +78,7 @@ def ingresa_venta(): #Funcion que maneja la venta de un producto
         etiqueta_producto_detalle = ttk.Label(ventana_detalle, text="Ingresar producto: ", font=("Arial", 15))
         etiqueta_producto_detalle.place(x = 20, y = 80)
         
-        cursor.execute(f"""select nombre_producto 
-               from producto p
-               inner join detalle_compra d in d.id_producto = p.id_producto
-               inner join compra c in c.id_compra = d.id_compra
-               where c.id_peluqueria = {peluqueria};""")
-        producto_disponible = cursor.fetchall()
-        
-        combo_producto_detalle = ttk.Combobox(ventana_detalle, values=producto_disponible, font=("Arial", 15), state='readonly')
+        combo_producto_detalle = ttk.Combobox(ventana_detalle, values=productos, font=("Arial", 15), state='readonly')
         combo_producto_detalle.place(x = 320, y = 80, width= 350, height=30)
 
         """INGRESAR CANTIDAD"""
@@ -302,8 +295,7 @@ def ingresa_empleado(): #Funcion que maneja el ingreso de un cliente
         rut = caja_rut.get() #Creo que falta un casteo a int
         nombre = caja_nombre.get()
         apellido = caja_apellido.get()
-        sexo = caja_sexo.get() #no hace falta
-        comuna = "pico"
+        comuna = combo_comuna_em.get()
         cursor.execute(f"select id_comuna from comuna where nombre={comuna};")
         id_comuna = cursor.fetchone()
         peluqueria = int(combo_peluqueria.get())
@@ -330,7 +322,7 @@ def ingresa_empleado(): #Funcion que maneja el ingreso de un cliente
     etiqueta_titulo.place(x = 260, y = 20)
 
     """INGRESAR RUT"""
-    etiqueta_rut = ttk.Label(ventana_empleado, text="Ingresar RUT: ", font=("Arial", 15))
+    etiqueta_rut = ttk.Label(ventana_empleado, text="Ingresar RUT sin DV: ", font=("Arial", 15))
     etiqueta_rut.place(x = 20, y = 80)
     
     caja_rut = ttk.Entry(ventana_empleado, font=("Arial", 15))
@@ -338,18 +330,24 @@ def ingresa_empleado(): #Funcion que maneja el ingreso de un cliente
 
     """INGRESAR NOMBRE"""
     etiqueta_nombre = ttk.Label(ventana_empleado, text="Ingresar nombre: ", font=("Arial", 15))
-    etiqueta_nombre.place(x = 20, y = 160)
+    etiqueta_nombre.place(x = 20, y = 128)
     
     caja_nombre = ttk.Entry(ventana_empleado, font=("Arial", 15))
-    caja_nombre.place(x = 320, y = 160, width= 350, height=30)
+    caja_nombre.place(x = 320, y = 128, width= 350, height=30)
 
     """INGRESAR APELLIDO"""
     etiqueta_apellido = ttk.Label(ventana_empleado, text="Ingresar apellido: ", font=("Arial", 15))
-    etiqueta_apellido.place(x = 20, y = 240)
+    etiqueta_apellido.place(x = 20, y = 176)
     
     caja_apellido = ttk.Entry(ventana_empleado, font=("Arial", 15))
-    caja_apellido.place(x = 320, y = 240, width= 350, height=30)
+    caja_apellido.place(x = 320, y = 176, width= 350, height=30)
 
+    """INGRESAR COMUNA"""
+    etiqueta_comuna_em = tk.Label(ventana_empleado, text="Ingresar comuna: ", font=("Arial", 15))
+    etiqueta_comuna_em.place(x = 20, y = 272)
+
+    combo_comuna_em = ttk.Combobox(ventana_empleado, values=["Titirilquén", "Santo Merluzo"], state='readonly', font=("Arial", 15))
+    combo_comuna_em.place(x = 320, y = 272, width= 350, height=30)
 
     """INGRESAR EMPLEADO"""
     boton_ingresar = tk.Button(ventana_empleado, text="Ingresar", font=("Arial", 15), command=ingreso_datos)
@@ -365,15 +363,16 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
     def cierra_ventana_cita():
         ventana_cita.destroy()
         ventana.deiconify()
-        ...
+
     
     def ingreso_datos():
-        rut_cl = caja_rut_cl.get()
-        rut_pel = caja_rut_pel.get()
-        fecha = caja_fecha.get() 
-        bloque = caja_bloque.get().split(",") #Son varios bloques :p
-        peluqueria = int(combo_peluqueria.get())
-        servicio = "Aqui iria lo que alvaro coloco de nuevo uwu"
+        rut_cl = int(caja_rut_cl.get())
+        rut_pel = int(caja_rut_pel.get())
+        fecha = caja_fecha.get()
+        cant_bloques = int(combo_cant_bloques.get())
+        bloque = [i for i in range(int(caja_bloque.get()), int(caja_bloque.get())+cant_bloques)] # feliz? -nyalvarito
+        peluqueria = int(combo_peluqueria.get()) # bitch wtf is this???? -nyalvarito
+        servicio = combo_servicio.get()
         
         cursor.execute("select max(id_cita) from cita limit 1;")
         id_cita = cursor.fetchone()[0]+1
@@ -386,7 +385,7 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
             cursor.execute("select max(id_ocurre) from ocurre limit 1;")
             id_ocurre = cursor.fetchone()[0]+1
             for i in bloque:
-                cursor.execute("insert into ocurre (id_ocurre, id_cita, id_bloque) values (%s,%s,%s)",(id_ocurre,id_cita,int(i)))
+                cursor.execute("insert into ocurre (id_ocurre, id_cita, id_bloque) values (%s,%s,%s)",(id_ocurre,id_cita,i))
                 conexion.commit()
                 id_ocurre+=1
         ...
@@ -428,12 +427,25 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
     caja_fecha.place(x = 320, y = 176, width= 350, height=30)
 
     """INGRESAR BLOQUE"""
-    etiqueta_bloque = tk.Label(ventana_cita, text="Ingresar bloque/s (1,2,3): ", font=("Arial", 15))
+    etiqueta_bloque = tk.Label(ventana_cita, text="Ingresar bloque/hora: ", font=("Arial", 15))
     etiqueta_bloque.place(x = 20, y = 224)
     
     caja_bloque = tk.Entry(ventana_cita, font=("Arial", 15))
     caja_bloque.place(x = 320, y = 224, width= 350, height=30)
 
+    """INGRESAR SERVICIO"""
+    etiqueta_servicio = tk.Label(ventana_cita, text="Ingresar servicio: ", font=("Arial", 15))
+    etiqueta_servicio.place(x = 20, y = 272)
+    
+    combo_servicio = ttk.Combobox(ventana_cita, values=["SERVICIO1", "SERVIICO2"], font=("Arial", 15), state='readonly')
+    combo_servicio.place(x = 320, y = 272, width= 350, height=30)
+
+    """INGRESAR CANTIDAD BLOQUES"""
+    etiqueta_cant_bloques = tk.Label(ventana_cita, text="Ingresar cantidad de horas: ", font=("Arial", 15))
+    etiqueta_cant_bloques.place(x = 20, y = 320)
+    
+    combo_cant_bloques = ttk.Combobox(ventana_cita, values=["1", "2", "3", "4", "5"], font=("Arial", 15), state='readonly')
+    combo_cant_bloques.place(x = 320, y = 320, width= 350, height=30)
 
     """INGRESAR CITA"""
     boton_ingresar = tk.Button(ventana_cita, text="Ingresar", font=("Arial", 15), command=ingreso_datos)
@@ -543,6 +555,7 @@ def inicializa_ventana(): #Funcion que inicializa la ventana principal
 
     ventana.geometry(f"750x450+{int(wtotal/4)}+{int(htotal/5)}")
 
+
 def main():
     global combo_peluqueria
     inicializa_ventana()
@@ -574,13 +587,14 @@ def main():
     etiqueta_peluqueria = ttk.Label(text="Ingresa sede: ", font=("Arial", 19))
     etiqueta_peluqueria.place(x=80, y=90)
 
-    cursor.execute("select id_peluqueria from peluqueria;")
-    peluquerias = cursor.fetchall()
+    #cursor.execute("select id_peluqueria from peluqueria;")
+    #peluquerias = cursor.fetchall()
 
     combo_peluqueria = ttk.Combobox(values=peluquerias, width=30, font=("Arial", 19), state='readonly')
     combo_peluqueria.place(x=250, y=90)
 
     ventana.mainloop()
+
 
 if __name__ == "__main__":
     main()

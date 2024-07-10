@@ -148,6 +148,7 @@ def tarea(Config1,Config2):
     citas = cursor1.fetchall()
     
     
+    
     bloque = verificar_dato(bloques,"bloque",cursor2)
     if len(bloque) != 0:
         cursor2.executemany("insert into bloque (id_bloque) VALUES (%s)",bloque)
@@ -196,6 +197,7 @@ def tarea(Config1,Config2):
     inner join peluqueria pe on pe.id_peluqueria = v.id_peluqueria;
     """
     
+    
     cursor1.execute("select id_venta from venta;")
     ventas = cursor1.fetchall()
     
@@ -239,10 +241,16 @@ def tarea(Config1,Config2):
     
     #Tabla 3 empleado_h
     sentencia3 = """
-    select e.rut_empleado, e.id_peluqueria, e.nombre_empleado, e.apellido_empleado, e.id_comuna, s.fecha, s.monto, s.id_sueldo, p.id_comuna
+    select e.rut_empleado, e.id_peluqueria, e.nombre_empleado, e.apellido_empleado, e.id_comuna, s.fecha, s.monto as monto_maximo, s.id_sueldo, p.id_comuna
     from empleado e
     inner join peluqueria p on p.id_peluqueria = e.id_peluqueria
-    inner join sueldo s on s.rut_empleado = e.rut_empleado;
+    inner join (
+        select rut_empleado, max(monto) as monto
+        from sueldo
+        group by rut_empleado
+    ) max_sueldo on max_sueldo.rut_empleado = e.rut_empleado
+    inner join sueldo s on s.rut_empleado = e.rut_empleado and s.monto = max_sueldo.monto
+    order by e.rut_empleado asc;
     """
     cursor1.execute("select id_sueldo from sueldo;")
     sueldos = cursor1.fetchall()
@@ -256,7 +264,7 @@ def tarea(Config1,Config2):
         conexion2.commit()
     
     peluqueria = verificar_dato(peluquerias,"peluqueria_h",cursor2)
-    if len(peluqeuria) != 0:
+    if len(peluqueria) != 0:
         cursor2.executemany("insert into peluqueria_h (id_peluqueria) values (%s)",peluqueria)
         conexion2.commit()
     

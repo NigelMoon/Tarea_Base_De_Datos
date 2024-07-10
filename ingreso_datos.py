@@ -298,7 +298,7 @@ apellidos =[
 
 def bloque():
     datos=""
-    for i in range(0,8):
+    for i in range(0,9):
         datos+="(%s),\n"%str(i+1)
     datos+="(10);\n"
     return datos
@@ -378,14 +378,14 @@ def ocurre():
         const+=1
         bloque = random.randint(1,10)
         datos+=f"({const},{i},{bloque}),\n"
-        while random.randint(0,1)!=0 and bloque<12:
+        while random.randint(0,1)!=0 and bloque<10:
             const+=1
             bloque+=1
             datos+=f"({const},{i+1},{bloque}),\n"
     const+=1
     bloque = random.randint(1,10)
     while True:
-        if random.randint(0,1) == 1 and bloque<12:
+        if random.randint(0,1) == 1 and bloque<10:
             datos+=f"({const},{N_CITA},{bloque}),\n"
             const+=1
             bloque+=1

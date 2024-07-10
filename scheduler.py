@@ -170,17 +170,17 @@ def tarea(Config1,Config2):
     
     empleado = verificar_dato(empleados,"empleado",cursor2)
     if len(empleado) !=0:
-        cursor2.execute("insert into empleado (rut_empleado,nombre_empleado,apellido_empleado) values (%s,%s,%s)",empleado)
+        cursor2.executemany("insert into empleado (rut_empleado,nombre_empleado,apellido_empleado) values (%s,%s,%s)",empleado)
         conexion2.commit()
 
     servicio = verificar_dato(servicios,"servicios",cursor2)
     if(len(servicio) != 0):
-        cursor2.execute("insert into servicios (id_servicio, nombre_servicio) values (%s,%s)",servicio)
+        cursor2.executemany("insert into servicios (id_servicio, nombre_servicio) values (%s,%s)",servicio)
         conexion2.commit()
     
     cita = verificar_dato(citas,"cita",cursor2)
     if len(cita)!=0:
-        cursor2.execute("insert into cita (id_cita, fecha, rut_empleado, id_peluqueria, id_servicio, rut_cliente, id_comuna_cliente, id_comuna_empleado, id_bloque_inicio, costo_servicio, id_comuna_peluqueria, sexo, id_bloque_fin) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",cita)
+        cursor2.executemany("insert into cita (id_cita, fecha, rut_empleado, id_peluqueria, id_servicio, rut_cliente, id_comuna_cliente, id_comuna_empleado, id_bloque_inicio, costo_servicio, id_comuna_peluqueria, sexo, id_bloque_fin) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",cita)
         conexion2.commit()
 
     print("Elementos de la tabla 1 ingresados con exito!!")
@@ -207,32 +207,32 @@ def tarea(Config1,Config2):
     
     peluqueria = verificar_dato(peluquerias,"peluqueria_v",cursor2)
     if len(peluqueria) != 0:
-        cursor2.execute("insert into peluqueria_v (id_peluqueria) values (%s)",peluqueria)
+        cursor2.executemany("insert into peluqueria_v (id_peluqueria) values (%s)",peluqueria)
         conexion2.commit()
     
     comuna = verificar_dato(comunas,"comuna_c",cursor2)
     if len(comuna)!=0:
-        cursor2.execute("insert into comuna_c (id_comuna,nombre) values (%s,%s)",comuna)
+        cursor2.executemany("insert into comuna_c (id_comuna,nombre) values (%s,%s)",comuna)
         conexion2.commit()
     
     cliente = verificar_dato(clientes,"clienteventa",cursor2)
     if len(cliente) != 0:
-        cursor2.execute("insert into clienteventa (rut_cliente,nombre) values (%s,%s)",cliente)
+        cursor2.executemany("insert into clienteventa (rut_cliente,nombre) values (%s,%s)",cliente)
         conexion2.commit()
         
     venta = verificar_dato(ventas,"venta",cursor2)
     if len(venta) != 0:
-        cursor2.execute("insert into venta (id_venta) values (%s)",venta)
+        cursor2.executemany("insert into venta (id_venta) values (%s)",venta)
         conexion2.commit()
     
     producto = verificar_dato(productos,"producto",cursor2)
     if len(producto)!=0:
-        cursor2.execute("insert into producto (id_producto) values (%s)",producto)
+        cursor2.executemany("insert into producto (id_producto) values (%s)",producto)
         conexion2.commit()
             
     detalle_venta = verificar_dato(detalles,"detalle_venta",cursor2)
     if len(detalle_venta)!=0:
-        cursor2.execute("insert into detalle_venta (id_detalle_venta, id_venta, id_producto, precio_venta, total, fecha, sexo, id_comuna, rut_cliente, id_peluqueria, id_comuna_peluqueria, subtotal, cantidad) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",detalle_venta)
+        cursor2.executemany("insert into detalle_venta (id_detalle_venta, id_venta, id_producto, precio_venta, total, fecha, sexo, id_comuna, rut_cliente, id_peluqueria, id_comuna_peluqueria, subtotal, cantidad) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",detalle_venta)
         conexion2.commit()
     
     print("Elementos de la tabla 2 ingresados con exito!!!")
@@ -252,22 +252,22 @@ def tarea(Config1,Config2):
     
     comuna = verificar_dato(comunas,"comuna_h",cursor2)
     if len(comuna) != 0:
-        cursor2.execute("insert into comuna_h (id_comuna,nombre) values (%s,%s)",comuna)
+        cursor2.executemany("insert into comuna_h (id_comuna,nombre) values (%s,%s)",comuna)
         conexion2.commit()
     
     peluqueria = verificar_dato(peluquerias,"peluqueria_h",cursor2)
     if len(peluqeuria) != 0:
-        cursor2.execute("insert into peluqueria_h (id_peluqueria) values (%s)",peluqueria)
+        cursor2.executemany("insert into peluqueria_h (id_peluqueria) values (%s)",peluqueria)
         conexion2.commit()
     
     sueldo = verificar_dato(sueldos,"sueldo",cursor2)
     if len(sueldo)!=0:
-        cursor2.execute("insert into sueldo (id_sueldo) values (%s)",sueldo)
+        cursor2.executemany("insert into sueldo (id_sueldo) values (%s)",sueldo)
         conexion2.commit()
     
     empleado = verificar_dato(empleados_h,"empleado_h",cursor2)
     if len(empleado) != 0:
-        cursor2.execute("insert into empleado_h (rut_empleado,id_peluqueria ,nombre_empleado,apellido_empleado,id_comuna,fecha,monto,id_sueldo,id_comuna_peluqueria) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)",empleado)
+        cursor2.executemany("insert into empleado_h (rut_empleado,id_peluqueria ,nombre_empleado,apellido_empleado,id_comuna,fecha,monto,id_sueldo,id_comuna_peluqueria) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)",empleado)
         conexion2.commit()
     
     print("Elementos de la tabla 3 ingresados con exito!!")
@@ -285,23 +285,23 @@ def tarea(Config1,Config2):
     
     servicio = verificar_dato(servicios,"servicios_o",cursor2)
     if len(servicio)!=0:
-        cursor2.execute("insert into servicios_o (id_servicio, nombre_servicio) values (%s,%s)",servicio)
+        cursor2.executemany("insert into servicios_o (id_servicio, nombre_servicio) values (%s,%s)",servicio)
         conexion2.commit()
     
     comuna = verificar_dato(comunas,"comuna_p",cursor2)
     if len(comuna) != 0:
-        cursor2.execute("insert into comuna_p (id_comuna, nombre) values (%s,%s)",comuna)
+        cursor2.executemany("insert into comuna_p (id_comuna, nombre) values (%s,%s)",comuna)
         conexion2.commit()
             
     
     peluqueria = verificar_dato(peluquerias,"peluqueria_s",cursor2)
     if len(peluqueria) != 0:
-        cursor2.execute("insert into peluqueria_s (id_peluqueria) values (%s)",peluqueria)
+        cursor2.executemany("insert into peluqueria_s (id_peluqueria) values (%s)",peluqueria)
         conexion2.commit()
             
     ofrece = verificar_dato(ofreces,"ofrece",cursor2)
     if len(ofrece)!=0:
-        cursor2.execute("insert into ofrece (id_ofrece, id_peluqueria, id_comuna, costo_servicio, id_servicio) values (%s,%s,%s,%s,%s)",ofrece)
+        cursor2.executemany("insert into ofrece (id_ofrece, id_peluqueria, id_comuna, costo_servicio, id_servicio) values (%s,%s,%s,%s,%s)",ofrece)
         conexion2.commit()
     
     print("Elementos de la tabla 4 ingresados con exito!!!")

@@ -150,7 +150,7 @@ def main():
     cursor.execute(pato(TABLA[14],DATOS.get(TABLA[14])))
     conexion.commit()
     #ocurre
-    cursor.execute(pato(TABLA[15],DATOS.get(TABLA[15])))
+    cursor.execute(pato(TABLA[15],DATOS.get(TABLA[15]),cursor))
     conexion.commit()
     #sueldo
     sueldo(cursor,conexion)
@@ -367,11 +367,13 @@ def venta():
     datos+=f"({N_VENTA*5*N_PELUQUERIAS+1},{fecha},{random.randint(1,200)},{random.randint(10000000,10000000+N_CLIENTE)},{N_PELUQUERIAS});\n"
     return datos
 
-def ocurre():
+def ocurre(cursor):
     #id_ocurre, id_cita, id_bloque
     datos = ""
     const = 0
-    for i in range(1,N_CITA):
+    cursor.execute("select count(id_cita) as citas from cita;")
+    citas = cursor.fetchone()[0]
+    for i in range(1,citas):
         const+=1
         bloque = random.randint(1,10)
         datos+=f"({const},{i},{bloque}),\n"
@@ -383,11 +385,11 @@ def ocurre():
     bloque = random.randint(1,10)
     while True:
         if random.randint(0,1) == 1 and bloque<10:
-            datos+=f"({const},{N_CITA},{bloque}),\n"
+            datos+=f"({const},{citas},{bloque}),\n"
             const+=1
             bloque+=1
         else:
-            datos+=f"({const},{N_CITA},{bloque});\n"
+            datos+=f"({const},{citas},{bloque});\n"
             return datos
 
 def detalle_venta():
@@ -441,7 +443,7 @@ def transaccion_stack():
     datos+=f"({N_TRANSACCION*5+1},{total},'{fecha}','{t}',{locura});\n"
     return datos
 
-def pato(a,b):
+def pato(a,b,cursor="nothing"):
     insert = "INSERT INTO %s (%s) VALUES\n"%(a,b)
     match a:
         case "bloque":
@@ -459,7 +461,7 @@ def pato(a,b):
         case "transaccion_stock":
             insert+=transaccion_stack()
         case "ocurre":
-            insert+=ocurre()
+            insert+=ocurre(cursor)
         case _:
             print("-<>-")
             return 0

@@ -17,7 +17,7 @@ with concurrencias as (
 )
 select bloque, peluqueria, comuna
 from concurrencias
-where rn = 1
+where rn = 1 and peluqueria < 10
 order by peluqueria desc;
 
 -- muestra la cantidad de citas
@@ -38,8 +38,8 @@ WITH concurrencias AS (
 )
 select bloque, concurrencia, peluqueria, comuna
 from concurrencias
-where rn = 1
-order by peluqueria DESC;
+where rn = 1 and peluqueria < 10
+order by peluqueria, bloque, concurrencia DESC;
 
 
 -- b)lista de clientes que gastan más dinero por peluquería, indicando comuna del cliente y de peluquería, además de cuanto gasto
@@ -50,6 +50,7 @@ select distinct on(peluqueria)
     comuna_peluqueria.nombre AS comuna_peluqueria,
     sum(coalesce(c.costo_servicio, 0) + coalesce(dv.total, 0)) AS gasto_total
 from cita c
+where peluqueria < 10
 inner join comuna comuna_cliente ON c.id_comuna_cliente = comuna_cliente.id_comuna
 inner join comuna comuna_peluqueria ON c.id_comuna_peluqueria = comuna_peluqueria.id_comuna
 left join detalle_venta dv ON c.rut_cliente = dv.rut_cliente AND c.id_peluqueria = dv.id_peluqueria
@@ -57,12 +58,14 @@ group by c.rut_cliente, c.id_peluqueria, comuna_cliente.nombre, comuna_peluqueri
 order by peluqueria, gasto_total DESC;
 --(ojo : si se cambia de desc a asc, muestra el que ha gastado menos dinero por peluqueria )
 
+
+--esta
 -- c) lista de peluqueros que ha ganado más por mes durante el 2023, esto por peluquería 
 select rut_empleado as empleado, max(monto) as monto, extract(month from fecha) as mes, id_peluqueria as peluqueria
 from empleado_h e
-where extract(year from fecha) = 2023
+where extract(year from fecha) = 2023 and id_peluqueria < 10
 group by empleado, mes, peluqueria
-order by peluqueria asc;
+order by peluqueria, mes, monto asc;
 
 
 -- d) lista de clientes hombres que se cortan el pelo y la barba  Grande nick
@@ -89,14 +92,15 @@ where b.id_cita = c.id_cita;
 select c.rut_cliente as cliente, s.nombre_servicio, c.id_comuna_cliente as comuna, c.id_peluqueria as peluqueria, c.costo_servicio as total
 from cita c
 inner join servicios s on s.id_servicio = c.id_servicio
-where s.nombre_servicio like '%coloracion%';
+where s.nombre_servicio like '%coloracion%' and id_peluqueria < 10
+order by comuna, peluqueria, total asc;
 
 
 -- f) identificar el horario más concurrido por peluquería durante el 2019 y 2020, desagregados por mes 
 create temp table bloques as
 select generate_series(1, 10) as num;
 
-
+--de aqui uwu
 with concurrencias as (
     select
         num as bloque,
@@ -111,8 +115,8 @@ with concurrencias as (
 )
 select bloque,concurrencia,peluqueria,mes
 from concurrencias
-where rn = 1
-order by peluqueria desc, mes asc;
+where rn = 1 and peluqueria < 10
+order by peluqueria , mes, bloque, concurrencia asc;
 
 
 -- g) identificar al cliente que ha tenido las citas más largas por peluquería, por mes
@@ -126,8 +130,8 @@ from (
         row_number() over (partition by extract(month from fecha), id_peluqueria order by (id_bloque_fin - id_bloque_inicio + 1) desc, rut_cliente) as rn
     from cita c
 ) t
-where rn = 1
-order by peluqueria ASC, mes DESC;
+where rn = 1 and peluqueria < 10
+order by peluqueria ASC, mes, horas_cita DESC;
 
 
 -- h) identificar servicio más caro por peluquería
@@ -139,9 +143,10 @@ join (
     group by id_peluqueria
 ) maximos
 on s.id_peluqueria = maximos.id_peluqueria AND s.costo_servicio = maximos.max_costo
+where peluqueria < 10
 join servicios_o c ON c.id_servicio = s.id_servicio
 group by s.id_peluqueria, servicio
-order by s.id_peluqueria desc;
+order by s.id_peluqueria, costo_maximo desc;
 
 
 

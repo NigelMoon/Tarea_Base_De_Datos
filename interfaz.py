@@ -535,7 +535,7 @@ def ingresa_cliente(): #Funcion que maneja el ingreso de un cliente
         apellido = caja_apellido.get() #no es taaan necesario btw
         sexo = combo_sexo.get()
         comuna = combo_comuna_cl.get()
-        cursor.execute(f"select id_comuna from comuna where nombre={comuna};")
+        cursor.execute(f"select c.id_comuna from comuna c where c.nombre = {comuna};")
         id_comuna = cursor.fetchone()[0]
         
         try:

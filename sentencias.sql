@@ -1,11 +1,45 @@
 -- a) horario con más citas durante el día por peluquería, identificando la comuna 
 
-select count(c.id_cita) as Cantidad_citas, c.id_peluqueria as peluqueria, co.nombre 
-from cita c
-inner join peluqueria p ON  c.id_peluqueria = p.id_peluqueria
-inner join comuna co on co.id_comuna = c.id_comuna_peluqueria 
-group by c.id_peluqueria, co.nombre 
-order by cantidad_citas desc;
+-- no muestra la cantidad de citas
+create temp table bloques as
+select generate_series(1, 10) as num;
+
+with concurrencias as (
+    select
+        num as bloque,
+        c.id_peluqueria as peluqueria,
+        co.nombre as comuna,
+        row_number() over (partition by c.id_peluqueria, co.nombre order by COUNT(*) desc) as rn
+    from bloques
+    join cita c on num between c.id_bloque_inicio AND c.id_bloque_fin
+    join comuna co on co.id_comuna = c.id_comuna_peluqueria
+    group by num, c.id_peluqueria, co.nombre
+)
+select bloque, peluqueria, comuna
+from concurrencias
+where rn = 1
+order by peluqueria desc;
+
+-- muestra la cantidad de citas
+CREATE TEMP TABLE bloques AS
+SELECT generate_series(1, 10) AS num;
+
+WITH concurrencias AS (
+    SELECT
+        num AS bloque,
+        COUNT(*) AS concurrencia,
+        c.id_peluqueria AS peluqueria,
+        co.nombre AS comuna,
+        ROW_NUMBER() OVER (PARTITION BY c.id_peluqueria, co.nombre ORDER BY COUNT(*) DESC) AS rn
+    from bloques
+    join cita c ON num BETWEEN c.id_bloque_inicio AND c.id_bloque_fin
+    join comuna co ON co.id_comuna = c.id_comuna_peluqueria
+    group by num, c.id_peluqueria, co.nombre
+)
+select bloque, concurrencia, peluqueria, comuna
+from concurrencias
+where rn = 1
+order by peluqueria DESC;
 
 
 -- b)lista de clientes que gastan más dinero por peluquería, indicando comuna del cliente y de peluquería, además de cuanto gasto

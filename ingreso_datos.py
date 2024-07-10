@@ -374,7 +374,7 @@ def ocurre():
     #id_ocurre, id_cita, id_bloque
     datos = ""
     const = 0
-    for i in range(N_CITA-1):
+    for i in range(1,N_CITA):
         const+=1
         bloque = random.randint(1,10)
         datos+=f"({const},{i},{bloque}),\n"

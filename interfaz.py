@@ -20,7 +20,8 @@ cursor = conexion.cursor()
 cursor.execute("select nombre from comuna;")
 comunas = cursor.fetchall()
 
-cursor.execute("select nombre_producto from producto;")
+cursor.execute("""select nombre_producto 
+               from producto p;""")
 productos = cursor.fetchall()
 
 #aqui ta raro el ingreso, ta medio huh? huh? huh?
@@ -77,7 +78,14 @@ def ingresa_venta(): #Funcion que maneja la venta de un producto
         etiqueta_producto_detalle = ttk.Label(ventana_detalle, text="Ingresar producto: ", font=("Arial", 15))
         etiqueta_producto_detalle.place(x = 20, y = 80)
         
-        combo_producto_detalle = ttk.Combobox(ventana_detalle, values=productos, font=("Arial", 15), state='readonly')
+        cursor.execute(f"""select nombre_producto 
+               from producto p
+               inner join detalle_compra d in d.id_producto = p.id_producto
+               inner join compra c in c.id_compra = d.id_compra
+               where c.id_peluqueria = {peluqueria};""")
+        producto_disponible = cursor.fetchall()
+        
+        combo_producto_detalle = ttk.Combobox(ventana_detalle, values=producto_disponible, font=("Arial", 15), state='readonly')
         combo_producto_detalle.place(x = 320, y = 80, width= 350, height=30)
 
         """INGRESAR CANTIDAD"""

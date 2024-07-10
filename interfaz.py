@@ -4,8 +4,8 @@ from datetime import date
 import psycopg2 as network
 
 
-PASSWORD = 'Contraseña'
-DATABASE = 'Database'
+PASSWORD = '1893981'
+DATABASE = 'Transaccional'
 
 CONFIG = {
             'user':'postgres',
@@ -101,10 +101,10 @@ def ingresa_venta(): #Funcion que maneja la venta de un producto
         etiqueta_titulo_detalle = ttk.Label(ventana_detalle, text="Ingresar datos del detalle de venta de un producto", font=("Arial", 15))
         etiqueta_titulo_detalle.place(x = 260, y = 20)
 
-        cursor.execute("""select p.nombre_producto from productos p 
-        inner join detalle_compra d in d.id_producto = p.id_producto
-        inner join compra c in d.id_compra = c.id_compra
-        inner join peluqueria pe in c.id_peluqueria = pe.id_peluqueria;""")
+        cursor.execute("""select p.nombre_producto from producto p 
+        inner join detalle_compra d on d.id_producto = p.id_producto
+        inner join compra c on d.id_compra = c.id_compra
+        inner join peluqueria pe on c.id_peluqueria = pe.id_peluqueria;""")
         productos_ventas = cursor.fetchall()
         
         """INGRESAR PRODUCTO"""
@@ -497,7 +497,13 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
     etiqueta_servicio = tk.Label(ventana_cita, text="Ingresar servicio: ", font=("Arial", 15))
     etiqueta_servicio.place(x = 20, y = 272)
     
-    combo_servicio = ttk.Combobox(ventana_cita, values=["SERVICIO1", "SERVIICO2"], font=("Arial", 15), state='readonly')
+    pelu = combo_peluqueria.get()
+    cursor.execute(f"""select s.nombre_servicio from servicios s
+                   inner join ofrece o on o.id_servicio = s.id_servicio
+                   where id_peluqueria = {pelu};""")
+    servicicios = cursor.fetchall()
+    
+    combo_servicio = ttk.Combobox(ventana_cita, values=servicicios, font=("Arial", 15), state='readonly')
     combo_servicio.place(x = 320, y = 272, width= 350, height=30)
 
     """INGRESAR CANTIDAD BLOQUES"""

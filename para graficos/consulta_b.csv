@@ -1,0 +1,101 @@
+cliente,peluqueria,comuna_cliente,comuna_peluqueria,gasto_total
+10000851,1,Llaillay,San Pedro de la Paz,60845891
+10000491,2,Nueva Imperial,Canela,96373242
+10000400,3,Carahue,Chillán,50403456
+10000874,4,Antofagasta,Parral,43592412
+10000000,5,Molina,Victoria,43173813
+10000640,6,Isla de Pascua,Antuco,74151556
+10000129,7,Santo Domingo,Cañete,59089362
+10000264,8,Rinconada,Quillota,53416095
+10000856,9,Coihueco,Calbuco,44090418
+10000412,10,Calbuco,Temuco,60852428
+10000784,11,Villa Alemana,Ovalle,57349754
+10000077,12,Hualañé,Tirúa,52639562
+10000618,13,Lonquimay,Coihueco,57447481
+10000364,14,Renaico,Cunco,44705760
+10000626,15,Negrete,Vicuña,56406780
+10000288,16,Mariquina,Niebla,41721396
+10000614,17,Yumbel,Putre,80843884
+10000479,18,Los Lagos,Concón,43985946
+10000262,19,Talca,Quirihue,39383282
+10000212,20,Tucapel,Santa Juana,56979384
+10000697,21,Pitrufquén,Illapel,39651689
+10000149,22,Curicó,Licantén,44758071
+10000777,23,Futrono,Dalcahue,54881716
+10000605,24,Quellón,Temuco,87993007
+10000016,25,Toltén,Cañete,51691050
+10000945,26,Ovalle,Puchuncaví,30588276
+10000760,27,San Nicolás,Quilimarí,47192448
+10000741,28,Pitrufquén,Arica,35781895
+10000093,29,San Antonio,Quintero,49288300
+10000187,30,San Javier,Ollagüe,52390265
+10000535,31,Lonquimay,General Lagos,45238216
+10000451,32,Pemuco,Arica,51026590
+10000368,33,Frutillar,Purén,55338075
+10000219,34,Castro,Angol,58405459
+10000711,35,Yerbas Buenas,La Ligua,43453887
+10000585,36,Cochamó,Alto del Carmen,59532524
+10000154,37,Taltal,Antofagasta,83938389
+10000819,38,Coronel,Teno,35602555
+10000306,39,Dalcahue,La Ligua,45892676
+10000466,40,San Javier,Parral,48983044
+10000017,41,Alto Hospicio,Putaendo,62249066
+10000867,42,Isla de Pascua,Tierra Amarilla,52699892
+10000253,43,Coelemu,Quintero,54604666
+10000583,44,Calama,San Ignacio,57448964
+10000665,45,Río Bueno,Quinchao,48778746
+10000922,46,Camarones,Teno,52106839
+10000459,47,San Carlos,Petorca,48322001
+10000574,48,La Calera,Tierra Amarilla,70626068
+10000625,49,Vichuquén,Concón,43745374
+10000875,50,Coquimbo,Pucón,57976719
+10000121,51,Antuco,Florida,45990593
+10000152,52,Quilaco,Purén,62735235
+10000024,53,Villa Alegre,Paiguano,64869072
+10000796,54,Mariquina,Talcahuano,50687833
+10000004,55,La Unión,Tomé,43715449
+10000172,56,Curaco de Vélez,Tomé,51615522
+10000758,57,Viña del Mar,Chillán Viejo,47157102
+10000881,58,Lago Ranco,Curaco de Vélez,53689303
+10000349,59,Villa Alemana,Ollagüe,49031928
+10000222,60,San Javier,Curarrehue,64975479
+10000470,61,Lota,Cochamó,53790365
+10000320,62,Zapallar,Arauco,35727680
+10000363,63,Ovalle,Llaillay,37976391
+10000636,64,Cañete,Punitaqui,45366604
+10000334,65,Paiguano,Castro,66860941
+10000826,66,Futrono,Quillota,51816849
+10000517,67,Arauco,Quinchao,65394244
+10000064,68,Lanco,Los Andes,53748130
+10000102,69,Lumaco,Villa Alemana,56487224
+10000209,70,Putre,Quinchao,65876629
+10000485,71,Angol,Ercilla,62879554
+10000793,72,Calbuco,Santa Bárbara,74189100
+10000354,73,Petorca,Casablanca,69499337
+10000910,74,Santa Juana,Quillota,39579905
+10000325,75,Arauco,Negrete,44515486
+10000943,76,Nueva Imperial,Ollagüe,65368785
+10000604,77,Quilpué,Cañete,59411087
+10000454,78,Puerto Varas,Vichuquén,56791389
+10000452,79,Florida,Antuco,65201076
+10000297,80,Salamanca,Putaendo,53225486
+10000118,81,Alto Biobío,Coihueco,67704976
+10000662,82,Putre,Chonchi,49115794
+10000917,83,Canela,Corral,33857127
+10000971,84,Concepción,Pucón,42718831
+10000128,85,Parral,Alto Biobío,51162903
+10000168,86,Quillota,Victoria,43905714
+10000386,87,Salamanca,Talcahuano,43530142
+10000312,88,Toltén,Valparaíso,45250235
+10000535,89,Lonquimay,Quintero,50087552
+10000093,90,San Antonio,Pozo Almonte,47216927
+10000833,91,Quilpué,Lumaco,60076294
+10000020,92,Teodoro Schmidt,Teodoro Schmidt,53592090
+10000662,93,Putre,Perquenco,64223278
+10000698,94,Treguaco,Licantén,53162652
+10000264,95,Rinconada,Niebla,46532277
+10000294,96,Futrono,La Calera,68312090
+10000590,97,Quilaco,Los Sauces,47239160
+10000116,98,Longaví,Putre,62314164
+10000075,99,Cunco,Illapel,40743244
+10000123,100,Villa Alemana,Molina,49464315

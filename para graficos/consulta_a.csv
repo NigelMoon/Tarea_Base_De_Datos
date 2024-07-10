@@ -1,101 +1,101 @@
-"cantidad_citas","peluqueria","nombre"
-9950,20,Santa Juana
-9805,69,Villa Alemana
-9795,88,Valparaíso
-9695,37,Antofagasta
-9640,70,Quinchao
-9580,91,Lumaco
-9540,72,Santa Bárbara
-9500,1,San Pedro de la Paz
-9435,52,Purén
-9385,65,Castro
-9350,66,Quillota
-9325,58,Curaco de Vélez
-9295,73,Casablanca
-9170,25,Cañete
-9070,43,Quintero
-9055,80,Putaendo
-8965,79,Antuco
-8920,17,Putre
-8870,94,Licantén
-8730,6,Antuco
-8730,11,Ovalle
-8720,24,Temuco
-8720,71,Ercilla
-8720,23,Dalcahue
-8530,78,Vichuquén
-8525,40,Parral
-8480,89,Quintero
-8425,100,Molina
-8375,36,Alto del Carmen
-8290,10,Temuco
-8280,93,Perquenco
-8215,81,Coihueco
-8210,47,Petorca
-8165,60,Curarrehue
-8115,39,La Ligua
-8075,33,Purén
-7915,13,Coihueco
-7885,30,Ollagüe
-7880,77,Cañete
-7840,97,Los Sauces
-7795,2,Canela
-7785,85,Alto Biobío
-7775,9,Calbuco
-7700,96,La Calera
-7695,48,Tierra Amarilla
-7665,54,Talcahuano
-7610,42,Tierra Amarilla
-7515,76,Ollagüe
-7405,32,Arica
-7355,82,Chonchi
-7255,35,La Ligua
-7245,4,Parral
-7220,64,Punitaqui
-7205,7,Cañete
-7205,3,Chillán
-7175,46,Teno
-7160,90,Pozo Almonte
-7150,41,Putaendo
-7090,63,Llaillay
-7070,53,Paiguano
-7040,67,Quinchao
-7000,12,Tirúa
-6945,29,Quintero
-6945,75,Negrete
-6920,86,Victoria
-6880,27,Quilimarí
-6840,15,Vicuña
-6835,38,Teno
-6780,51,Florida
-6700,44,San Ignacio
-6695,57,Chillán Viejo
-6645,50,Pucón
-6600,34,Angol
-6560,74,Quillota
-6470,84,Pucón
-6450,8,Quillota
-6305,14,Cunco
-6270,68,Los Andes
-6235,98,Putre
-6165,18,Concón
-6065,19,Quirihue
-6020,22,Licantén
-6005,95,Niebla
-5760,45,Quinchao
-5740,28,Arica
-5720,87,Talcahuano
-5705,56,Tomé
-5680,55,Tomé
-5680,31,General Lagos
-5585,59,Ollagüe
-5530,61,Cochamó
-5490,99,Illapel
-5295,62,Arauco
-5250,92,Teodoro Schmidt
-5250,83,Corral
-5230,49,Concón
-5220,5,Victoria
-5215,26,Puchuncaví
-5065,16,Niebla
-5030,21,Illapel
+bloque,concurrencia,peluqueria,comuna
+6,2910,100,Molina
+6,1967,99,Illapel
+6,2234,98,Putre
+6,2832,97,Los Sauces
+6,2745,96,La Calera
+6,2075,95,Niebla
+6,3052,94,Licantén
+6,2876,93,Perquenco
+6,1794,92,Teodoro Schmidt
+6,3463,91,Lumaco
+6,2490,90,Pozo Almonte
+6,2943,89,Quintero
+6,3469,88,Valparaíso
+6,2011,87,Talcahuano
+6,2437,86,Victoria
+6,2684,85,Alto Biobío
+6,2230,84,Pucón
+6,1831,83,Corral
+6,2594,82,Chonchi
+6,2842,81,Coihueco
+6,3117,80,Putaendo
+6,3107,79,Antuco
+6,2989,78,Vichuquén
+6,2713,77,Cañete
+6,2574,76,Ollagüe
+6,2416,75,Negrete
+6,2346,74,Quillota
+6,3282,73,Casablanca
+6,3273,72,Santa Bárbara
+6,2972,71,Ercilla
+6,3402,70,Quinchao
+6,3491,69,Villa Alemana
+6,2136,68,Los Andes
+6,2414,67,Quinchao
+6,3257,66,Quillota
+6,3211,65,Castro
+6,2470,64,Punitaqui
+6,2490,63,Llaillay
+6,1887,62,Arauco
+6,1987,61,Cochamó
+6,2830,60,Curarrehue
+6,2023,59,Ollagüe
+6,3289,58,Curaco de Vélez
+6,2371,57,Chillán Viejo
+6,1962,56,Tomé
+6,1993,55,Tomé
+6,2668,54,Talcahuano
+6,2479,53,Paiguano
+6,3211,52,Purén
+6,2382,51,Florida
+6,2300,50,Pucón
+6,1798,49,Concón
+6,2669,48,Tierra Amarilla
+6,2887,47,Petorca
+6,2452,46,Teno
+6,2080,45,Quinchao
+6,2340,44,San Ignacio
+6,3154,43,Quintero
+6,2637,42,Tierra Amarilla
+6,2475,41,Putaendo
+6,2993,40,Parral
+6,2853,39,La Ligua
+6,2282,38,Teno
+6,3290,37,Antofagasta
+6,2943,36,Alto del Carmen
+6,2554,35,La Ligua
+6,2271,34,Angol
+6,2856,33,Purén
+6,2586,32,Arica
+6,1942,31,General Lagos
+6,2715,30,Ollagüe
+5,2360,29,Quintero
+6,2030,28,Arica
+6,2377,27,Quilimarí
+6,1857,26,Puchuncaví
+6,3168,25,Cañete
+6,3016,24,Temuco
+6,3053,23,Dalcahue
+6,2112,22,Licantén
+6,1749,21,Illapel
+6,3290,20,Santa Juana
+6,2049,19,Quirihue
+6,2149,18,Concón
+6,3110,17,Putre
+6,1792,16,Niebla
+6,2354,15,Vicuña
+6,2278,14,Cunco
+6,2818,13,Coihueco
+6,2442,12,Tirúa
+6,2981,11,Ovalle
+6,2827,10,Temuco
+6,2684,9,Calbuco
+6,2276,8,Quillota
+6,2556,7,Cañete
+6,2975,6,Antuco
+6,1873,5,Victoria
+6,2580,4,Parral
+6,2446,3,Chillán
+6,2779,2,Canela
+6,3320,1,San Pedro de la Paz

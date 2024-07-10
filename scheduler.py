@@ -91,7 +91,7 @@ def main():
             Bruno = False
 
     print("inicializando schedule")
-    tarea(Config1,Config2)
+    #tarea(Config1,Config2)
     schedule.every(1).week.do(tarea,Config1,Config2)
     while True:
         schedule.run_pending()

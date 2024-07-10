@@ -371,7 +371,7 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
         rut_cl = caja_rut_cl.get()
         rut_pel = caja_rut_pel.get()
         fecha = caja_fecha.get() 
-        bloque = caja_bloque.get() #Son varios bloques :p
+        bloque = caja_bloque.get().split(",") #Son varios bloques :p
         peluqueria = int(combo_peluqueria.get())
         servicio = "Aqui iria lo que alvaro coloco de nuevo uwu"
         
@@ -386,7 +386,7 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
             cursor.execute("select max(id_ocurre) from ocurre limit 1;")
             id_ocurre = cursor.fetchone()[0]+1
             for i in bloque:
-                cursor.execute("insert into ocurre (id_ocurre, id_cita, id_bloque) values (%s,%s,%s)",(id_ocurre,id_cita,i))
+                cursor.execute("insert into ocurre (id_ocurre, id_cita, id_bloque) values (%s,%s,%s)",(id_ocurre,id_cita,int(i)))
                 conexion.commit()
                 id_ocurre+=1
         ...
@@ -428,7 +428,7 @@ def ingresa_cita(): #Funcion que maneja el ingreso de citas
     caja_fecha.place(x = 320, y = 176, width= 350, height=30)
 
     """INGRESAR BLOQUE"""
-    etiqueta_bloque = tk.Label(ventana_cita, text="Ingresar bloque/hora: ", font=("Arial", 15))
+    etiqueta_bloque = tk.Label(ventana_cita, text="Ingresar bloque/s (1,2,3): ", font=("Arial", 15))
     etiqueta_bloque.place(x = 20, y = 224)
     
     caja_bloque = tk.Entry(ventana_cita, font=("Arial", 15))
@@ -543,7 +543,6 @@ def inicializa_ventana(): #Funcion que inicializa la ventana principal
 
     ventana.geometry(f"750x450+{int(wtotal/4)}+{int(htotal/5)}")
 
-
 def main():
     global combo_peluqueria
     inicializa_ventana()
@@ -582,7 +581,6 @@ def main():
     combo_peluqueria.place(x=250, y=90)
 
     ventana.mainloop()
-
 
 if __name__ == "__main__":
     main()

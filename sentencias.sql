@@ -65,12 +65,24 @@ group by empleado, mes, peluqueria
 order by peluqueria asc;
 
 
--- d) lista de clientes hombres que se cortan el pelo y la barba 
-select rut_cliente, s.nombre_servicio as servicio
-from cita c
-inner join servicios s on s.id_servicio = c.id_servicio
-where sexo = 'M' and s.nombre_servicio like '%barberia%' 
-and s.nombre_servicio like '%corte de cabello%';
+-- d) lista de clientes hombres que se cortan el pelo y la barba  Grande nick
+with Barberia as (
+	select id_cita, rut_cliente, s.nombre_servicio as servicio
+	from cita c
+	inner join servicios s on s.id_servicio = c.id_servicio
+	where sexo = 'M' and (s.nombre_servicio like '%barberia%' or s.nombre_servicio like '%barba%')
+),
+Cabello as (
+	select	id_cita, rut_cliente, s.nombre_servicio as servicio
+	from cita c
+	inner join servicios s on s.id_servicio = c.id_servicio
+	where sexo = 'M' and s.nombre_servicio like '%cabello%' 
+)
+select ci.rut_cliente as cliente
+from cita ci
+inner join Barberia b on b.id_cita = ci.id_cita 
+inner join Cabello c on c.id_cita = ci.id_cita 
+where b.id_cita = c.id_cita;
 
 
 -- e) lista de clientes que tiñen el pelo, indicando la comuna del cliente, la peluquería donde se atendió y el valor que pagó 
